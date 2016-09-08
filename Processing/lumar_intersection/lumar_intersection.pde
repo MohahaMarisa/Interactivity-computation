@@ -8,10 +8,11 @@ void setup() {
   }
 }
 void draw() {
-  background(255,235,230); //<>// //<>//
+  background(200,130,165); //<>// //<>//
   for(int i=0; i<thelines.length;i++){
     for(int j = i+1; j<thelines.length; j++){//testing all the other lines in the array
       float xintersect=(thelines[i].b -thelines[j].b)/(thelines[j].slope - thelines[i].slope);
+      
       if(xintersect>thelines[i].startX && xintersect<thelines[i].endX &&
         xintersect>thelines[j].startX && xintersect<thelines[j].endX){//if the xintersect is within the domain of both lines, the circle is drawn
         float yintersect = xintersect*thelines[i].slope+thelines[i].b;
@@ -27,15 +28,16 @@ void draw() {
   }
 }
 class Line { 
-  float startX = random(0,width/2);
+  float startX = random(0,width);
   float startY = random(0,height);
-  float endX = random(width/2,width);
+  float endX = random(0,width);
   float endY = random(0,height);
-  float slope = (endY-startY)/(endX-startX);//slope is delta y over delta x
+  float slope =(endY-startY)/(Math.abs(endX-startX));
+  //slope is delta y over delta x 
   float b = startY- slope*startX;//b = y-mx
   void draw(){
-    stroke(255,190,195);
-    strokeWeight(4);
+    stroke(255,230,230);
+    strokeWeight(1);
     line(startX, startY, endX, endY);
   }
 }
