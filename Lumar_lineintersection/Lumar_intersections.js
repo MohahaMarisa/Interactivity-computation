@@ -26,7 +26,7 @@ function draw() {
   }
 }
 function Linemaker() { 
-  this.startX = random(0,width/2);
+  this.startX = random(0,width);
   this.startY = random(0,height);
   this.endX = random(this.startX,width);//SEE NOTES
   this.endY = random(0,height);
