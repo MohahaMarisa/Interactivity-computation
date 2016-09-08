@@ -40,7 +40,6 @@ function Linemaker() {
 }
 function mousePressed(){
   clear();
-  println("clear has been done and array is "+thelines.length);
   thelines=[];//clears the array that holds all the object lines
   for(var i=0; i<numoflines; i++){
     thelines.push(new Linemaker());//puts new obj lines into the array
