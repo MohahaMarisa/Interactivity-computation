@@ -6,8 +6,10 @@ void setup() {
   for(int i=0; i<numoflines; i++){
     thelines = (Line[])append(thelines, new Line());
   }
+  drawstuff();
 }
-void draw() {
+void draw(){}
+void drawstuff() {
   background(200,130,165); //<>// //<>//
   for(int i=0; i<thelines.length;i++){
     for(int j = i+1; j<thelines.length; j++){//testing all the other lines in the array
@@ -17,7 +19,7 @@ void draw() {
         xintersect>thelines[j].startX && xintersect<thelines[j].endX){//if the xintersect is within the domain of both lines, the circle is drawn
         float yintersect = xintersect*thelines[i].slope+thelines[i].b;
         noStroke();
-        fill(200,220,245,140);
+        fill(180,200,245,100);
         ellipse(xintersect, yintersect, 20,20);
       }
     }
@@ -28,9 +30,9 @@ void draw() {
   }
 }
 class Line { 
-  float startX = random(0,width);
+  float startX = random(0,width/2);
   float startY = random(0,height);
-  float endX = random(0,width);
+  float endX = random(startX,width);
   float endY = random(0,height);
   float slope =(endY-startY)/(endX-startX);
   //slope is delta y over delta x 
@@ -48,4 +50,5 @@ void mousePressed(){
     morelines = (Line[])append(morelines, new Line());
   }
   thelines = morelines;
+  drawstuff();
 }
