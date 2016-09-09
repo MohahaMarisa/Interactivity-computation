@@ -32,7 +32,7 @@ class Line {
   float startY = random(0,height);
   float endX = random(0,width);
   float endY = random(0,height);
-  float slope =(endY-startY)/(Math.abs(endX-startX));
+  float slope =(endY-startY)/(endX-startX);
   //slope is delta y over delta x 
   float b = startY- slope*startX;//b = y-mx
   void draw(){
@@ -43,6 +43,7 @@ class Line {
 }
 void mousePressed(){
   Line morelines[] = new Line[0];
+  clear();
   for(int i=0; i<numoflines; i++){
     morelines = (Line[])append(morelines, new Line());
   }
