@@ -2,20 +2,20 @@ var thelines = [];
 var numoflines = 12;
 function setup() {
   createCanvas(800,800);
-  for(var i=0; i<numoflines; i++){
+  for(var i=0; i < numoflines; i++){
     thelines.push(new Linemaker());
   }
 }
 function draw() {
   background(200,140,180);
-  for(var i=0; i<thelines.length;i++){//goes through each line in the array
+  for(var i=0; i< thelines.length;i++){//goes through each line in the array
     thelines[i].draw();
-    for(var j = i+1; j<thelines.length; j++){//compares it to all the lines behind it
+    for(var j = i+1; j< thelines.length; j++){//compares it to all the lines behind it
       var xintersect=(thelines[i].b -thelines[j].b)/(thelines[j].slope - thelines[i].slope);//SEE NOTES
       var yintersect = xintersect*thelines[i].slope+thelines[i].b;
       //if the xintersect is within the domain of both lines, the circle is drawn
-      if(xintersect>thelines[i].startX-2 && xintersect<thelines[i].endX+2 &&
-        xintersect>thelines[j].startX-2 && xintersect<thelines[j].endX+2){/*SEE NOTES FOR WHY THERE'S 
+      if(xintersect > thelines[i].startX-2 && xintersect < thelines[i].endX+2 &&
+        xintersect > thelines[j].startX-2 && xintersect < thelines[j].endX+2){/*SEE NOTES FOR WHY THERE'S 
         '+2' AND '-2', BECAUSE IT ISN'T ACTUALLY NEEDED*/
         stroke(255);
         strokeWeight(1);
@@ -41,7 +41,7 @@ function Linemaker() {
 function mousePressed(){
   clear();
   thelines=[];//clears the array that holds all the object lines
-  for(var i=0; i<numoflines; i++){
+  for(var i=0; i < numoflines; i++){
     thelines.push(new Linemaker());//puts new obj lines into the array
   }
 }

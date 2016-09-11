@@ -1,8 +1,7 @@
 int numoflines = 100;
-//datatype[] name = new dataype[#]
 Line thelines[] = new Line[0];
 void setup() {
-  size(800,800);//FX2D high density renderer inside size - fullscreen(renderer,whichscreen); //pixelDensity();
+  size(500,500);//FX2D high density renderer inside size - fullscreen(renderer,whichscreen); //pixelDensity();
   for(int i=0; i<numoflines; i++){
     thelines = (Line[])append(thelines, new Line());
   }
