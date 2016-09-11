@@ -35,7 +35,11 @@ function draw() {
     }
     else{
       stroke(startr+incrementr*i, startg+incrementg*i,startb+incrementb*i);
-      line(mouseX-radius+i,mouseY-lengthOfLine,mouseX-radius+i,mouseY+lengthOfLine);
+      push();
+        translate(mouseX,mouseY);
+        rotate(t*10);
+        line(-radius+i,-lengthOfLine,-radius+i,lengthOfLine);
+      pop();
     }
   }
   t+=1/1000;
