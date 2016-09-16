@@ -37,9 +37,14 @@ var mintwo;
 var hourcircle;
 var hourtwo;
 var light;
+
+var extra;
+var extratwo;
 function setup() {
   createCanvas(700,700);
   background(230,230,250);
+  extra = new Decor;
+  extratwo = new Decor;
   hourcircle = new HourCircle;
   hourtwo = new HourCircle;
   mincircle = new MinCircle(60);
@@ -174,7 +179,13 @@ function draw() {
       reps++;
     }
   }
-  t+=Math.PI*1/900000;
+  t+=Math.PI*1/9000;
+  push();
+    translate(width/2, -30);
+    rotate(t);
+    extratwo.draw();
+  pop();
+  extra.draw();
 }
 function HourCircle(){
   this.radius = 90;
@@ -239,46 +250,38 @@ function MinCircle(rad){
   }
 }
 function Decor(){
-  var radius = 90;
-var diameter = radius*2;
+  this.radius = 40;
+  this.diameter = this.radius*2;
 //var strokew = round(diameter/180);
-var startr = 245;
-var startg = 230;
-var startb = 170;
-var r = 235;
-var g = 100;
-var b = 120;
-var t=0;
-function setup() {
-  createCanvas(700,700);
-  background(230,230,250);
-}
+  this.startr = 245;
+  this.startg = 230;
+  this.startb = 170;
+  this.r = 235;
+  this.g = 100;
+  this.b = 120;
 
-this.draw=function(){
-  this.startr = 55*noise(t+6)+200;
-  this.startg = 55*noise(t+20)+200;
-  this.startb = 55*noise(t+1)+200;
-  this.r = 210-210*noise(t);
-  this.g = 210-210*noise(t+9);
-  this.b = 210-210*noise(t+4);
-  for (var i = 1; i <= 180; i++){
-    this.incrementr = (r-startr)/180;
-    this.incrementg = (g-startg)/180;
-    this.incrementb = (b-startb)/180;
-    this.angle = (i/180)*Math.PI;
+  this.draw=function(){
+    this.startr = 55*noise(t+6)+200;
+    this.startg = 55*noise(t+20)+200;
+    this.startb = 55*noise(t+1)+200;
+    this.r = 210-210*noise(t);
+    this.g = 210-210*noise(t+9);
+    this.b = 210-210*noise(t+4);
+    for (var i = 1; i <= this.diameter; i++){
+      this.incrementr = (this.r-this.startr)/this.diameter;
+      this.incrementg = (this.g-this.startg)/this.diameter;
+      this.incrementb = (this.b-this.startb)/this.diameter;
+      this.mappedi = map(i,0,this.diameter,0,180);
+      this.angle = (i/180)*Math.PI;
     //fullcircle
-    this.lengthOfLine = Math.abs(radius*(Math.sin(Math.acos((90-i)/radius))));
+      this.lengthOfLine = Math.abs(this.radius*(Math.sin(Math.acos((90-this.mappedi)/this.radius))));
     //halfcircle
     //var lengthOfLine = Math.abs(radius*(Math.sin(Math.acos(i/radius))));
     //diamond
     //var lengthOfLine = Math.abs(radius*(Math.sin(angle)));
-    if(mouseIsPressed){
+        stroke(this.startr+this.incrementr*i, this.startg+this.incrementg*i,this.startb+this.incrementb*i);
+        line(mouseX-this.radius+i,mouseY-this.lengthOfLine,mouseX-this.radius+i,mouseY+this.lengthOfLine);
     }
-    else{
-      stroke(startr+incrementr*i, startg+incrementg*i,startb+incrementb*i);
-      line(mouseX-radius+i,mouseY-lengthOfLine,mouseX-radius+i,mouseY+lengthOfLine);
-    }
+    t+=1/1000;
   }
-  t+=1/1000;
-}
 }
