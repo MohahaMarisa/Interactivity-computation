@@ -34,11 +34,15 @@ function draw() {
     if(mouseIsPressed){
     }
     else{
-      stroke(startr+incrementr*i, startg+incrementg*i,startb+incrementb*i);
+      
       push();
+
         translate(mouseX,mouseY);
         rotate(t*10);
-        line(-radius+i,-lengthOfLine,-radius+i,lengthOfLine);
+
+         stroke(startr+incrementr*i, startg+incrementg*i,startb+incrementb*i);
+         line(-radius+i,-lengthOfLine,-radius+i,lengthOfLine);
+        
       pop();
     }
   }
