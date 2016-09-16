@@ -18,10 +18,22 @@ var repEndtwo;
 var lerpNum = 0;
 var numPath;
 var numPathtwo;
-
+//minutestuff
+var mreps = 0;
+var mrepstwo = 0;
+var mrepEnd;
+var mrepEndtwo;
+var mlerpNum = 0;
+var mlerpNumtwo=0;
+var mnumPath;
+var mnumPathtwo;
 //var hour();
 var hr;
-var min;
+var minutes;
+var tenMin;
+var singleMin;
+var mincircle;
+var mintwo;
 var hourcircle;
 var hourtwo;
 var light;
@@ -30,6 +42,8 @@ function setup() {
   background(230,230,250);
   hourcircle = new HourCircle;
   hourtwo = new HourCircle;
+  mincircle = new MinCircle(60);
+  mintwo = new MinCircle(45);
   zero = [ createVector(315, 0, 0), createVector(210, 33, 0), createVector(140, 133, 0), createVector(105, 300, 0), createVector(105, 400, 0), createVector(140, 567, 0), createVector(210, 667, 0), createVector(315, 700, 0), createVector(385, 700, 0), createVector(490, 667, 0), createVector(560, 567, 0), createVector(595, 400, 0), createVector(595, 300, 0), createVector(560, 133, 0), createVector(490, 33, 0), createVector(385, 0, 0), createVector(315, 0, 0)];
   one = [ createVector(210, 133, 0), createVector(280, 100, 0), createVector(385, 0, 0), createVector(385, 700, 0)];
   two = [ createVector(140, 167, 0), createVector(140, 133, 0), createVector(175, 67, 0), createVector(210, 33, 0), createVector(280, 0, 0), createVector(420, 0, 0), createVector(490, 33, 0), createVector(525, 67, 0), createVector(560, 133, 0), createVector(560, 200, 0), createVector(525, 267, 0), createVector(455, 367, 0), createVector(105, 700, 0), createVector(595, 700, 0)];
@@ -50,14 +64,53 @@ function setup() {
 function draw() {
   // Fetch the current time
   //hour() = hour();
-  min = minute();
+  minutes = minute();
   var lightnowr= light[hour()].x;
   var lightnowg= light[hour()].y;
   var lightnowb= light[hour()].z;
   var darknowr= shadow[hour()].x;
   var darknowg= shadow[hour()].y;
   var darknowb= shadow[hour()].z;
+  tenMin = floor((minutes/10));
+  singleMin = minutes%10;
   hourcircle.draw(t, lightnowr, lightnowg, lightnowb, darknowr, darknowg, darknowb);
+  hourtwo.draw(t, lightnowr, lightnowg, lightnowb, darknowr, darknowg, darknowb);
+  mincircle.draw(t, lightnowr, lightnowg, lightnowb, darknowr, darknowg, darknowb);
+  mintwo.draw(t, lightnowr, lightnowg, lightnowb, darknowr, darknowg, darknowb);
+  mnumPathtwo = allday[singleMin];
+    var amountOfvert = mnumPathtwo.length;
+    mrepstwo=mrepstwo%(amountOfvert-1);
+    mrepEndtwo=(mrepstwo+1)%(amountOfvert);//rep = which vertice to go through
+    var testingxtwo = mnumPathtwo[mrepEndtwo].x;
+    var testingytwo = mnumPathtwo[mrepEndtwo].y;
+    var sumtwo = testingxtwo+testingytwo;
+    if (sumtwo <= 0){
+      mrepstwo+=2;//this is to lift up the circle gradient when necesary if there's a break in path
+    }
+    mintwo.move(mnumPathtwo[mrepstwo],mnumPathtwo[mrepEndtwo],mlerpNumtwo);
+    mlerpNumtwo+=1/60;
+    if(mlerpNumtwo > 1){
+      mlerpNumtwo=0;
+      mrepstwo++;
+  }
+  if (tenMin >0){
+    mnumPath = allday[tenMin];
+    var amountOfvertice = mnumPath.length;
+    mreps=mreps%(amountOfvertice-1);
+    mrepEnd=(mreps+1)%(amountOfvertice);//rep = which vertice to go through
+    var testingx = mnumPath[mrepEnd].x;
+    var testingy = mnumPath[mrepEnd].y;
+    var sum = testingx+testingy;
+    if (sum <= 0){
+      mreps+=2;//this is to lift up the circle gradient when necesary if there's a break in path
+    }
+    mincircle.move(mnumPath[mreps],mnumPath[mrepEnd],mlerpNum);
+    mlerpNum+=1/50;
+    if(mlerpNum > 1){
+      mlerpNum=0;
+      mreps++;
+    }
+  }
   hr = hour();
   if((!(hr > 9))||(hr>12)){
     numPath = allday[(hr%12)];
@@ -81,7 +134,9 @@ function draw() {
     numPath = allday[1];
     var amountOfvertice = numPath.length;
     reps=reps%(amountOfvertice-1);
+    repstwo = (amountOfvertice-1)-reps;
     repEnd=(reps+1)%(amountOfvertice);//rep = which vertice to go through
+    repEndtwo = (amountOfvertice) - repEnd;
     var testingx = numPath[repEnd].x;
     var testingy = numPath[repEnd].y;
     var sum = testingx+testingy;
@@ -155,27 +210,23 @@ function HourCircle(){
 
 }
 
-function MinuteCircle(){
-  this.radius = 45;
+function MinCircle(rad){
+  this.radius = rad;
   this.diameter = this.radius*2; 
   this.x = -100;
   this.y = -100;
   this.draw = function(t,lightr,lightg,lightb, shadowr,shadowg, shadowb){
     for (var i = 1; i <= this.diameter; i++){
-      this.incrementr = (shadowr-lightr)/180;
-      this.incrementg = (shadowg-lightg)/180;
-      this.incrementb = (shadowb-lightb)/180;
-    //fullcircle
-      this.lengthOfLine = Math.abs(this.radius*(Math.sin(Math.acos((90-i)/this.radius))));
-    //halfcircle
-    //this.lengthOfLine = Math.abs(this.radius*(Math.sin(Math.acos(i/this.radius))));
+      this.incrementr = (shadowr-lightr)/this.diameter;
+      this.incrementg = (shadowg-lightg)/this.diameter;
+      this.incrementb = (shadowb-lightb)/this.diameter;
     //diamond
-    this.angle = (i/180)*Math.PI;
+    this.mappedi = map(i,0,this.diameter,0,180);
+    this.angle = (this.mappedi/180)*Math.PI;
     this.lengthOfLine = Math.abs(this.radius*(Math.sin(this.angle)));
       this.rotation=(hour()+18)*-1*Math.PI/24;//REFLECTS POSITION OF SUN IN SKY
       push();
-        translate(this.x,this.y);
-        rotate(this.angle);
+        translate(this.x, this.y);
         stroke(lightr+this.incrementr*i, lightg+this.incrementg*i,lightb+this.incrementb*i);
         line(-this.radius+i,-this.lengthOfLine,-this.radius+i,this.lengthOfLine);   
       pop();
@@ -187,4 +238,47 @@ function MinuteCircle(){
     this.y = lerp(startv.y, endv.y, lerpNum);
   }
 }
+function Decor(){
+  var radius = 90;
+var diameter = radius*2;
+//var strokew = round(diameter/180);
+var startr = 245;
+var startg = 230;
+var startb = 170;
+var r = 235;
+var g = 100;
+var b = 120;
+var t=0;
+function setup() {
+  createCanvas(700,700);
+  background(230,230,250);
+}
 
+this.draw=function(){
+  this.startr = 55*noise(t+6)+200;
+  this.startg = 55*noise(t+20)+200;
+  this.startb = 55*noise(t+1)+200;
+  this.r = 210-210*noise(t);
+  this.g = 210-210*noise(t+9);
+  this.b = 210-210*noise(t+4);
+  for (var i = 1; i <= 180; i++){
+    this.incrementr = (r-startr)/180;
+    this.incrementg = (g-startg)/180;
+    this.incrementb = (b-startb)/180;
+    this.angle = (i/180)*Math.PI;
+    //fullcircle
+    this.lengthOfLine = Math.abs(radius*(Math.sin(Math.acos((90-i)/radius))));
+    //halfcircle
+    //var lengthOfLine = Math.abs(radius*(Math.sin(Math.acos(i/radius))));
+    //diamond
+    //var lengthOfLine = Math.abs(radius*(Math.sin(angle)));
+    if(mouseIsPressed){
+    }
+    else{
+      stroke(startr+incrementr*i, startg+incrementg*i,startb+incrementb*i);
+      line(mouseX-radius+i,mouseY-lengthOfLine,mouseX-radius+i,mouseY+lengthOfLine);
+    }
+  }
+  t+=1/1000;
+}
+}
