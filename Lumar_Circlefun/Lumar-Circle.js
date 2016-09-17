@@ -4,8 +4,6 @@ var diameter = radius*2;
 var startr = 245;
 var startg = 230;
 var startb = 170;
-var x;
-var y;
 var r = 235;
 var g = 100;
 var b = 120;
@@ -13,8 +11,6 @@ var t=0;
 function setup() {
   createCanvas(700,700);
   background(230,230,250);
-  x= width/2;
-  y = height/2;
 }
 
 function draw() {
@@ -38,18 +34,9 @@ function draw() {
     if(mouseIsPressed){
     }
     else{
-      
-      push();
-        translate(x,y);
-        rotate(t*10);
-
-         stroke(startr+incrementr*i, startg+incrementg*i,startb+incrementb*i);
-         line(-radius+i,-lengthOfLine,-radius+i,lengthOfLine);
-        
-      pop();
+      stroke(startr+incrementr*i, startg+incrementg*i,startb+incrementb*i);
+      line(mouseX-radius+i,mouseY-lengthOfLine,mouseX-radius+i,mouseY+lengthOfLine);
     }
   }
-    x = 0.96*x+0.04*mouseX;
-    y = 0.96*y+0.04*mouseY;
   t+=1/1000;
 }

@@ -13,8 +13,8 @@ var t=0;
 function setup() {
   createCanvas(700,700);
   background(230,230,250);
-  x= width/2;
-  y = height/2;
+  x= mouseX;
+  y = mouseY;
 }
 
 function draw() {
@@ -40,6 +40,8 @@ function draw() {
     else{
       
       push();
+        x = 0.9*x+0.1*mouseX;
+        y = 0.9*y+0.1*mouseY;
         translate(x,y);
         rotate(t*10);
 
@@ -49,7 +51,5 @@ function draw() {
       pop();
     }
   }
-    x = 0.96*x+0.04*mouseX;
-    y = 0.96*y+0.04*mouseY;
   t+=1/1000;
 }

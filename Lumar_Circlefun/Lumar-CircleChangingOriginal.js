@@ -61,8 +61,6 @@ function draw() {
   // Fetch the current time
   //hour() = hour();
   background(210,230,255,3);
-
-  //background(
   //background(220,230,255,4);
   minutes = minute();
   hr = hour();
